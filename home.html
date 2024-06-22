@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./images/images-removebg-preview.png" type="image/x-icon">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="./style/home.css"> <!-- Link to your external CSS file -->
+    <style>
+        /* Add styles for the modal */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            gap: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-content p {
+            color: #333; /* Warning text color */
+        }
+
+        .modal-content button{
+            height: 40px;
+        }
+
+        .crypto-info{
+            width: 95%;
+            background: #333;
+            padding: 3%;
+            border-radius: 10px;
+        }
+
+        .crypto-list {
+            list-style-type: none;
+            margin-top: 20px;
+        }
+        .crypto-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .crypto-item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="user-profile">
+            <img src="./images/images-removebg-preview.png" alt="User Avatar" class="user-avatar">
+            <div class="user-info" onclick="logout()">
+                <h2 id="userName">Loading...</h2>
+                <p id="userRole">Loading...</p>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="dashboard-section">
+            <div class="amounts">
+                <div class="card">
+                    <h3>Amount</h3>
+                    <p id="amounts">Loading...</p>
+                </div>
+                <div class="iconDiv">
+                    <p><i class="bx bx-send"></i> send</p>
+                    <p><i class="bx bx-money-withdraw"></i> withdraw</p>
+                    <p><i class="bx bx-plus-circle" id="depositIcon"></i> Deposit</p>
+                </div>
+            </div>
+            <div class="crypto-info">
+                <h2>Cryptocurrency Information</h2>
+                <ul class="crypto-list">
+                    <!-- Cryptocurrency details will be listed here -->
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Deposit Information</h2>
+            <p>Coin Name: USDT (TRC 20)</p>
+            <p>USDT : TRy7CTTtjwQh2vPExyHpajrWwNcSTD6EXW</p>
+            <p><strong>Warning:</strong> If you did not make this transaction and click done, you will be blocked forever.</p>
+            <button id="doneBtn">Done</button>
+        </div>
+    </div>
+
+    <script src="./js/crypto.js"></script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+
+    <script>
+        // Your Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyByrzrfUOpe7qcSLsUfBAGwSxRdC4inbdA",
+            authDomain: "mambahbot-76918.firebaseapp.com",
+            projectId: "mambahbot-76918",
+            storageBucket: "mambahbot-76918.appspot.com",
+            messagingSenderId: "738810147389",
+            appId: "1:738810147389:web:5c9bee1869616674c67054"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        // Log out function to clear localStorage and redirect to signUp.html
+        function logout() {
+            localStorage.removeItem('loggedIn');
+            localStorage.removeItem('userId');
+            window.location.href = 'register.html';
+        }
+
+        // Add logout function to global scope so it can be called from HTML
+        window.logout = logout;
+
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("depositIcon");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // Get the done button inside the modal
+        var doneBtn = document.getElementById("doneBtn");
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks on the done button, close the modal and show alert
+        doneBtn.onclick = function() {
+            console.log("You will be blocked forever!");
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Fetch user data and display it
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                const userId = user.uid;
+                db.collection('users').doc(userId).get().then(doc => {
+                    if (doc.exists) {
+                        const userData = doc.data();
+                        document.getElementById('userName').innerText = userData.username;
+                        document.getElementById('userRole').innerText = userData.email;
+                        document.getElementById('amounts').innerText = `$${userData.amount}`;
+                    } else {
+                        console.log("No such document!");
+                    }
+                }).catch(error => {
+                    console.log("Error getting document:", error);
+                });
+            } else {
+                // Redirect to login if no user is logged in
+                window.location.href = 'register.html';
+            }
+        });
+    </script>
+</body>
+</html>

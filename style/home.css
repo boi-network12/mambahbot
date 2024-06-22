@@ -1,0 +1,125 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+    height: 100vh;
+}
+
+header {
+    background-color: #1f1f1f;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 50px; /* Adjust size as needed */
+    height: 50px;
+    border-radius: 50%; /* Ensure it's a circle */
+    margin-right: 10px;
+}
+
+.user-info {
+    text-align: left;
+}
+
+.dashboard-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.amounts {
+    display: flex;
+    flex-direction: column;
+    background-color: #333333;
+    margin-bottom: 50px;
+    padding: 5%;
+    border-radius: 10px;
+    align-items: flex-start;
+    width: 40%;
+}
+
+.amounts .iconDiv{
+    display: flex;
+    flex-direction: row;
+    gap: 20%;
+    width: 100%;
+}
+
+.amounts .iconDiv i{
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+    font-size: 2rem;
+    border-radius: 50%;
+}
+
+.amounts .card {
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%; 
+    margin: 10px;
+    text-align: left;
+}
+
+.transactions {
+    background-color: #333333;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-left: 20px;
+    width: 100%;
+    height: 40rem;
+}
+
+.transaction-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.transaction-list li {
+    margin-bottom: 10px;
+}
+
+@media (max-width: 767px) {
+    .dashboard-section {
+        flex-direction: column; /* Stack items vertically on small screens */
+        align-items: center;
+    }
+
+    .card {
+        width: 100%; /* Take full width on smaller screens */
+    }
+
+    .transactions {
+        margin-left: 0; /* Remove left margin on small screens */
+        margin-top: 20px; /* Add top margin for spacing */
+    }
+
+    .amounts{
+        width: 100%;
+        align-items: center;
+    }
+
+    .amounts .iconDiv{
+        width: 100%;
+        justify-content: center;
+    }
+}

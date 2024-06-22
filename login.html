@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="shortcut icon" href="./images/images-removebg-preview.png" type="image/x-icon">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Sign Up</title>
+    
+</head>
+<body>
+    <div class="container">
+        <h1 class="welcome-heading">Welcome to Mambahbot</h1>
+        <img src="./images/images-removebg-preview.png" alt="Bot Image" class="bot-image">
+        
+        <div id="login-form">
+            <h2>Login</h2>
+            <form id="loginForm"> <!-- Added id="loginForm" -->
+                <div class="form-group">
+                    <input type="text" id="loginEmail" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="loginPassword" placeholder="Password">
+                </div>
+                <button type="submit" id="loginButton">Login</button> <!-- Changed onclick to type="submit" -->
+                <div class="toggle-link" >Don't have an account?  <a href="./register.html ">Sign up</a></div>
+            </form>
+        </div>
+
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <!-- Firebase Authentication -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+        <script type="module" src="./js/login.js" defer></script>
+</body>
+</html>
